@@ -1,14 +1,21 @@
 import { useState, useEffect } from 'react'
-import { ArrowUpRight, Github, Linkedin, Terminal, Instagram, Moon, Sun, ChevronDown, Mail, Phone, MapPin, Clock, FileText } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { ArrowUpRight, Github, Linkedin, Terminal, Moon, Sun, ChevronDown, Mail, Phone, MapPin, Clock, FileText } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Analytics } from '@vercel/analytics/react'
+
+type ColorTheme = 'green' | 'blue' | 'purple' | 'red' | 'orange' | 'pink' | 'cyan' | 'rainbow'
 
 export default function EnhancedPortfolio() {
   const [activeWindow, setActiveWindow] = useState('about')
   const [isDarkMode, setIsDarkMode] = useState(true)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [terminalStyle, setTerminalStyle] = useState<WindowProps['style']>('modern')
+  const [colorTheme, setColorTheme] = useState<ColorTheme>('green')
+  const [isThemeControlsOpen, setIsThemeControlsOpen] = useState(false)
 
   useEffect(() => {
+    // Handle scroll to update active window
     const handleScroll = () => {
       const sections = ['home', 'about', 'projects', 'career', 'contact']
       const currentSection = sections.find(section => {
@@ -29,38 +36,431 @@ export default function EnhancedPortfolio() {
   }, [])
 
   useEffect(() => {
-    setTimeout(() => setIsLoading(false),500)
+    // Add initial loading animation
+    const timer = setTimeout(() => setIsLoading(false), 500)
+    return () => clearTimeout(timer)
   }, [])
 
-  const Window = ({ 
-    title, 
-    children, 
-    isActive = false 
-  }: { 
+  // Window component with TypeScript props
+  interface WindowProps {
     title: string
     children: React.ReactNode
-    isActive?: boolean 
-  }) => (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`bg-black/80 backdrop-blur-sm rounded-lg border border-zinc-800 overflow-hidden ${isActive ? 'ring-1 ring-green-500/20' : ''}`}
-    >
-      <div className="flex items-center justify-between px-4 py-2 border-b border-zinc-800">
-        <span className="text-sm text-zinc-400 font-mono">{title}</span>
-        <div className="flex gap-2">
-          <div className="w-3 h-3 rounded-full bg-zinc-600" />
-          <div className="w-3 h-3 rounded-full bg-zinc-600" />
-          <div className="w-3 h-3 rounded-full bg-red-500" />
+    isActive?: boolean
+    style?: 'modern' | 'retro' | 'minimal' | 'glass' | 'neon' | 'matrix' | 'cyberpunk' | 'gradient'
+  }
+
+  const Window = ({ title, children, isActive = false, style = terminalStyle }: WindowProps) => {
+    const styles = {
+      modern: {
+        window: `bg-black/80 backdrop-blur-sm rounded-lg border border-${colorTheme}-500/20`,
+        header: `px-4 py-2 border-b border-${colorTheme}-500/20`,
+        buttons: "flex gap-2",
+        button: "w-3 h-3 rounded-full",
+        title: `text-sm text-${colorTheme}-400 font-mono`,
+        content: "p-4",
+        animation: {
+          initial: { opacity: 0, y: 20 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.5 }
+        }
+      },
+      retro: {
+        window: "bg-zinc-900 rounded border-2 border-green-500/50 shadow-[0_0_15px_rgba(34,197,94,0.2)]",
+        header: "px-4 py-2 border-b-2 border-green-500/50 bg-zinc-800",
+        buttons: "flex gap-2",
+        button: "w-3 h-3 rounded",
+        title: "text-sm text-green-500 font-mono uppercase tracking-wider",
+        content: "p-4 text-green-500",
+        animation: {
+          initial: { scale: 0.95, opacity: 0 },
+          animate: { scale: 1, opacity: 1 },
+          transition: { type: "spring", stiffness: 300, damping: 20 }
+        }
+      },
+      minimal: {
+        window: "bg-zinc-900/50 rounded-sm border border-zinc-800",
+        header: "px-3 py-1.5 border-b border-zinc-800",
+        buttons: "hidden",
+        button: "",
+        title: "text-xs text-zinc-500 font-mono",
+        content: "p-3",
+        animation: {
+          initial: { opacity: 0, x: -20 },
+          animate: { opacity: 1, x: 0 },
+          transition: { duration: 0.3 }
+        }
+      },
+      glass: {
+        window: "bg-white/10 backdrop-blur-md rounded-xl border border-white/20 shadow-lg",
+        header: "px-4 py-2 border-b border-white/20",
+        buttons: "flex gap-2",
+        button: "w-3 h-3 rounded-full bg-white/20",
+        title: "text-sm text-white/70 font-mono",
+        content: "p-4",
+        animation: {
+          initial: { opacity: 0, backdropFilter: "blur(0px)" },
+          animate: { opacity: 1, backdropFilter: "blur(12px)" },
+          transition: { duration: 0.7 }
+        }
+      },
+      neon: {
+        window: "bg-black/90 rounded-lg border-2 border-purple-500/50 shadow-[0_0_20px_rgba(168,85,247,0.4)]",
+        header: "px-4 py-2 border-b-2 border-purple-500/50 bg-black/50",
+        buttons: "flex gap-2",
+        button: "w-3 h-3 rounded-full animate-pulse",
+        title: "text-sm text-purple-400 font-mono uppercase tracking-widest",
+        content: "p-4 text-purple-300",
+        animation: {
+          initial: { opacity: 0, scale: 0.98 },
+          animate: { opacity: 1, scale: 1 },
+          transition: { 
+            duration: 0.5,
+            repeat: Infinity,
+            repeatType: "reverse",
+            repeatDelay: 5
+          }
+        }
+      },
+      matrix: {
+        window: "bg-black rounded-lg border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.2)] overflow-hidden",
+        header: "px-4 py-2 border-b border-green-500/30 bg-black/90",
+        buttons: "flex gap-2",
+        button: "w-3 h-3 rounded-full bg-green-500/50",
+        title: "text-sm text-green-400 font-mono glitch",
+        content: "p-4 text-green-400 matrix-bg",
+        animation: {
+          initial: { opacity: 0, y: -20 },
+          animate: { opacity: 1, y: 0 },
+          transition: { type: "spring", stiffness: 200 }
+        }
+      },
+      cyberpunk: {
+        window: "bg-black/80 rounded-lg border-l-4 border-r-4 border-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.3)]",
+        header: "px-4 py-2 border-b-2 border-yellow-500/50 bg-yellow-500/10",
+        buttons: "flex gap-2",
+        button: "w-3 h-3 rounded cyberpunk-glow",
+        title: "text-sm text-yellow-500 font-mono uppercase tracking-widest",
+        content: "p-4 text-yellow-100",
+        animation: {
+          initial: { opacity: 0, skewX: -10 },
+          animate: { opacity: 1, skewX: 0 },
+          transition: { type: "spring", stiffness: 100 }
+        }
+      },
+      gradient: {
+        window: "bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-red-500/20 backdrop-blur-md rounded-lg border border-white/10",
+        header: "px-4 py-2 border-b border-white/10 bg-white/5",
+        buttons: "flex gap-2",
+        button: "w-3 h-3 rounded-full gradient-glow",
+        title: "text-sm text-white/80 font-mono",
+        content: "p-4 text-white/90",
+        animation: {
+          initial: { opacity: 0, rotate: -2 },
+          animate: { opacity: 1, rotate: 0 },
+          transition: { type: "spring", stiffness: 200 }
+        }
+      }
+    }
+
+    const currentStyle = styles[style]
+
+    return (
+      <motion.div
+        {...currentStyle.animation}
+        className={`${currentStyle.window} overflow-hidden ${isActive ? 'ring-1 ring-green-500/20' : ''}`}
+      >
+        <div className={`flex items-center justify-between ${currentStyle.header}`}>
+          <span className={currentStyle.title}>{title}</span>
+          <div className={currentStyle.buttons}>
+            {style !== 'minimal' && (
+              <>
+                <motion.div 
+                  whileHover={{ scale: 1.2 }}
+                  className={`${currentStyle.button} ${getButtonColor(style, 'close')}`} 
+                />
+                <motion.div 
+                  whileHover={{ scale: 1.2 }}
+                  className={`${currentStyle.button} ${getButtonColor(style, 'minimize')}`} 
+                />
+                <motion.div 
+                  whileHover={{ scale: 1.2 }}
+                  className={`${currentStyle.button} ${getButtonColor(style, 'maximize')}`} 
+                />
+              </>
+            )}
+          </div>
         </div>
-      </div>
-      <div className="p-4">{children}</div>
-    </motion.div>
-  )
+        <AnimatePresence mode="wait">
+          <motion.div 
+            key={style}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className={currentStyle.content}
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+    )
+  }
+
+  // Helper function for button colors
+  const getButtonColor = (style: string, type: 'close' | 'minimize' | 'maximize') => {
+    const colors = {
+      modern: { close: 'bg-red-500', minimize: 'bg-yellow-500', maximize: 'bg-green-500' },
+      retro: { close: 'bg-green-500/50', minimize: 'bg-green-500/50', maximize: 'bg-green-500/50' },
+      glass: { close: 'bg-white/20', minimize: 'bg-white/20', maximize: 'bg-white/20' },
+      neon: { close: 'bg-purple-500', minimize: 'bg-purple-400', maximize: 'bg-purple-300' },
+      matrix: { close: 'bg-green-500', minimize: 'bg-green-400', maximize: 'bg-green-300' },
+      cyberpunk: { close: 'bg-yellow-500', minimize: 'bg-yellow-400', maximize: 'bg-yellow-300' },
+      gradient: { close: 'bg-gradient-to-r from-purple-500 to-pink-500', minimize: 'bg-gradient-to-r from-pink-500 to-red-500', maximize: 'bg-gradient-to-r from-red-500 to-orange-500' }
+    }
+    return colors[style]?.[type] || colors.modern[type]
+  }
+
+  const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
+    const isActive = activeWindow === href.replace('#', '')
+    
+    return (
+      <motion.a
+        href={href}
+        className={`relative text-sm uppercase tracking-wider transition-colors
+          ${isActive ? 'text-green-500' : 'text-zinc-400 hover:text-green-500'}`}
+        onClick={(e) => {
+          e.preventDefault()
+          document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+          setIsMenuOpen(false)
+        }}
+      >
+        {children}
+        {isActive && (
+          <motion.div
+            layoutId="activeSection"
+            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-500"
+            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+          />
+        )}
+      </motion.a>
+    )
+  }
+
+  const Navigation = () => {
+    return (
+      <nav aria-label="Main navigation">
+        <div className="flex justify-between items-center">
+          <Terminal className="text-green-500 w-8 h-8" />
+          <button
+            className="md:hidden text-zinc-400 hover:text-green-500 transition-colors"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <ChevronDown className={`w-6 h-6 transform transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
+          </button>
+          <ul className={`md:flex items-center gap-4 text-zinc-400 ${isMenuOpen ? 'block absolute top-full left-0 right-0 bg-black/80 p-4 md:p-0 md:relative md:bg-transparent' : 'hidden'}`}>
+            {['home', 'about', 'projects', 'career', 'contact'].map((item) => (
+              <li key={item}>
+                <NavLink href={`#${item}`}>
+                  {item === 'career' ? 'Career Journey' : item}
+                </NavLink>
+              </li>
+            ))}
+            <li className="md:ml-4">
+              <motion.a
+                href="https://drive.google.com/file/d/1wzmmR0z68oF1bbAdFbrzcoAl6c1ZVeTh/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 text-black font-semibold rounded-full 
+                  hover:bg-green-400 transition-colors duration-300"
+              >
+                <FileText className="w-4 h-4" />
+                Resume
+              </motion.a>
+            </li>
+            <li>
+              <button
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                className="text-zinc-400 hover:text-green-500 transition-colors"
+                aria-label="Toggle dark mode"
+              >
+                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    )
+  }
+
+  const ThemeControls = () => {
+    const colorThemes = {
+      green: { 
+        primary: 'rgb(34, 197, 94)', 
+        accent: 'rgb(21, 128, 61)',
+        gradient: 'from-green-500/20 to-green-600/20'
+      },
+      blue: { 
+        primary: 'rgb(59, 130, 246)', 
+        accent: 'rgb(29, 78, 216)',
+        gradient: 'from-blue-500/20 to-blue-600/20'
+      },
+      purple: { 
+        primary: 'rgb(168, 85, 247)', 
+        accent: 'rgb(126, 34, 206)',
+        gradient: 'from-purple-500/20 to-purple-600/20'
+      },
+      red: { 
+        primary: 'rgb(239, 68, 68)', 
+        accent: 'rgb(185, 28, 28)',
+        gradient: 'from-red-500/20 to-red-600/20'
+      },
+      orange: { 
+        primary: 'rgb(249, 115, 22)', 
+        accent: 'rgb(194, 65, 12)',
+        gradient: 'from-orange-500/20 to-orange-600/20'
+      },
+      pink: { 
+        primary: 'rgb(236, 72, 153)', 
+        accent: 'rgb(190, 24, 93)',
+        gradient: 'from-pink-500/20 to-pink-600/20'
+      },
+      cyan: { 
+        primary: 'rgb(34, 211, 238)', 
+        accent: 'rgb(21, 170, 191)',
+        gradient: 'from-cyan-500/20 to-cyan-600/20'
+      },
+      rainbow: { 
+        primary: 'linear-gradient(to right, #ff0000, #00ff00, #0000ff)', 
+        accent: 'linear-gradient(to right, #ff0000, #00ff00, #0000ff)',
+        gradient: 'from-violet-500/20 via-fuchsia-500/20 to-pink-500/20'
+      }
+    }
+
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="fixed bottom-4 left-4 z-50"
+      >
+        <motion.div
+          initial={false}
+          animate={{ height: isThemeControlsOpen ? 'auto' : '48px' }}
+          className={`bg-black/90 backdrop-blur-md rounded-lg border border-${colorTheme}-500/20 
+            shadow-lg shadow-${colorTheme}-500/10 overflow-hidden
+            transition-colors duration-300`}
+        >
+          <button
+            onClick={() => setIsThemeControlsOpen(!isThemeControlsOpen)}
+            className={`w-full px-4 py-2 flex items-center justify-between 
+              text-${colorTheme}-400 hover:text-${colorTheme}-300 
+              transition-all duration-300`}
+          >
+            <span className="text-sm font-mono flex items-center gap-2">
+              <div className={`w-2 h-2 rounded-full bg-${colorTheme}-500 animate-pulse`} />
+              Theme Controls
+            </span>
+            <motion.div
+              animate={{ rotate: isThemeControlsOpen ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChevronDown className="w-4 h-4" />
+            </motion.div>
+          </button>
+
+          <AnimatePresence>
+            {isThemeControlsOpen && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className={`p-4 border-t border-${colorTheme}-500/20`}
+              >
+                {/* Color Theme Selection */}
+                <div className="space-y-4">
+                  <h3 className={`text-sm font-mono text-${colorTheme}-400`}>Color Theme</h3>
+                  <div className="grid grid-cols-4 gap-2">
+                    {Object.entries(colorThemes).map(([theme, colors]) => (
+                      <motion.button
+                        key={theme}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => setColorTheme(theme as ColorTheme)}
+                        className={`w-8 h-8 rounded-full relative 
+                          ${colorTheme === theme 
+                            ? `ring-2 ring-${theme}-400 ring-offset-2 ring-offset-black` 
+                            : ''}`}
+                        style={{
+                          background: colors.primary,
+                          boxShadow: `0 0 20px ${theme === 'rainbow' 
+                            ? 'rgba(124, 58, 237, 0.2)' 
+                            : colors.primary}40`
+                        }}
+                      >
+                        {colorTheme === theme && (
+                          <motion.div
+                            layoutId="selectedColor"
+                            className={`absolute inset-0 rounded-full border-2 border-${theme}-400`}
+                            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                          />
+                        )}
+                      </motion.button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Terminal Style Selection */}
+                <div className="mt-6 space-y-4">
+                  <h3 className={`text-sm font-mono text-${colorTheme}-400`}>Terminal Style</h3>
+                  <div className="grid grid-cols-2 gap-2">
+                    {['modern', 'retro', 'minimal', 'glass', 'neon', 'matrix', 'cyberpunk', 'gradient'].map((style) => (
+                      <motion.button
+                        key={style}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => setTerminalStyle(style as WindowProps['style'])}
+                        className={`px-3 py-2 rounded-md text-xs font-mono transition-all duration-300
+                          ${terminalStyle === style 
+                            ? `bg-${colorTheme}-500 text-black font-medium shadow-md shadow-${colorTheme}-500/20` 
+                            : `text-${colorTheme}-400 hover:text-${colorTheme}-300 bg-black/50 hover:bg-black/70`}`}
+                      >
+                        {style}
+                      </motion.button>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </motion.div>
+    )
+  }
+
+  const getThemeColor = (opacity = 1) => {
+    const colors = {
+      green: `rgba(34, 197, 94, ${opacity})`,
+      blue: `rgba(59, 130, 246, ${opacity})`,
+      purple: `rgba(168, 85, 247, ${opacity})`,
+      red: `rgba(239, 68, 68, ${opacity})`,
+      orange: `rgba(249, 115, 22, ${opacity})`,
+      pink: `rgba(236, 72, 153, ${opacity})`,
+      cyan: `rgba(34, 211, 238, ${opacity})`,
+      rainbow: `rgba(124, 58, 237, ${opacity})`
+    }
+    return colors[colorTheme]
+  }
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'bg-gradient-to-br from-black via-black/90 to-green-950/30' : 'bg-gradient-to-br from-white via-gray-100 to-green-100'}`}>
+    <div 
+      className="min-h-screen transition-all duration-500"
+      style={{
+        background: isDarkMode 
+          ? `linear-gradient(to bottom right, rgb(0, 0, 0), rgba(0, 0, 0, 0.9), ${getThemeColor(0.1)})`
+          : `linear-gradient(to bottom right, rgb(255, 255, 255), rgb(243, 244, 246), ${getThemeColor(0.1)})`
+      }}
+    >
       {isLoading ? (
         <motion.div
           className="fixed inset-0 bg-black z-50 flex items-center justify-center"
@@ -72,55 +472,10 @@ export default function EnhancedPortfolio() {
         </motion.div>
       ) : (
         <>
+          <ThemeControls />
           <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm">
             <nav className="container mx-auto px-6 py-4">
-              <div className="flex justify-between items-center">
-                <Terminal className="text-green-500 w-8 h-8" />
-                <button
-                  className="md:hidden text-zinc-400 hover:text-green-500 transition-colors"
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  aria-label="Toggle menu"
-                >
-                  <ChevronDown className={`w-6 h-6 transform transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
-                </button>
-                <ul className={`md:flex items-center gap-4 text-zinc-400 ${isMenuOpen ? 'block' : 'hidden'}`}>
-                  {['home', 'about', 'projects', 'career', 'contact'].map((item) => (
-                    <li key={item}>
-                      <a
-                        href={`#${item}`}
-                        className={`text-sm uppercase tracking-wider hover:text-green-500 transition-colors ${
-                          activeWindow === item ? 'text-green-500' : ''
-                        }`}
-                      >
-                        {item === 'career' ? 'Career Journey' : item}
-                      </a>
-                    </li>
-                  ))}
-                  <li className="md:ml-4">
-                    <motion.a
-                      href="https://drive.google.com/file/d/1wzmmR0z68oF1bbAdFbrzcoAl6c1ZVeTh/view?usp=sharing"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 text-black font-semibold rounded-full 
-                        hover:bg-green-400 transition-colors duration-300"
-                    >
-                      <FileText className="w-4 h-4" />
-                      Resume
-                    </motion.a>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => setIsDarkMode(!isDarkMode)}
-                      className="text-zinc-400 hover:text-green-500 transition-colors"
-                      aria-label="Toggle dark mode"
-                    >
-                      {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                    </button>
-                  </li>
-                </ul>
-              </div>
+              <Navigation />
             </nav>
           </header>
 
@@ -193,7 +548,7 @@ export default function EnhancedPortfolio() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
-                  className="flex justify-center gap-8 mb-12"
+                  className="flex flex-wrap justify-center gap-8 mb-12"
                 >
                   {[
                     { label: 'Years Experience', value: '2+' },
@@ -712,7 +1067,7 @@ export default function EnhancedPortfolio() {
                         {[
                           { icon: Github, label: 'github.com/isandeepmakwana', href: 'https://github.com/isandeepMakwana' },
                           { icon: Linkedin, label: 'linkedin.com/in/sandeepmakwana', href: 'https://www.linkedin.com/in/sandeepmakwana' },
-                          { icon: Instagram, label: '@sandeep.makwana', href: '#' },
+                          { icon: Terminal, label: 'leetcode.com/isandeepMakwana', href: 'https://leetcode.com/isandeepMakwana' },
                         ].map((social, index) => (
                           <motion.div
                             key={index}
@@ -749,9 +1104,10 @@ export default function EnhancedPortfolio() {
 
           <footer className="bg-black/80 backdrop-blur-sm py-8">
             <div className="container mx-auto px-6 text-center">
-              <p className="text-zinc-400">&copy; 2024 Sandeep Makwana. All rights reserved.</p>
+              <p className="text-zinc-400">Copyright &copy; 2024 Sandeep Makwana. All rights reserved.</p>
             </div>
           </footer>
+          <Analytics />
         </>
       )}
     </div>
