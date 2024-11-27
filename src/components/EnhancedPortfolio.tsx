@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ArrowUpRight, Github, Linkedin, Terminal, Moon, Sun, ChevronDown, Mail, Phone, MapPin, Clock, FileText } from 'lucide-react'
+import { ArrowUpRight, Github, Linkedin, Terminal, Moon, Sun, ChevronDown, Mail, Phone, MapPin, Clock, FileText, Code2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Analytics } from '@vercel/analytics/react'
 
@@ -41,12 +41,22 @@ export default function EnhancedPortfolio() {
     return () => clearTimeout(timer)
   }, [])
 
+  useEffect(() => {
+    // Update terminal style when dark mode changes
+    if (!isDarkMode) {
+      setTerminalStyle('paper')
+    } else {
+      setTerminalStyle('modern') // or whatever default dark theme you prefer
+    }
+  }, [isDarkMode])
+
   // Window component with TypeScript props
   interface WindowProps {
     title: string
     children: React.ReactNode
     isActive?: boolean
-    style?: 'modern' | 'retro' | 'minimal' | 'glass' | 'neon' | 'matrix' | 'cyberpunk' | 'gradient'
+    style?: 'modern' | 'retro' | 'minimal' | 'glass' | 'neon' | 'matrix' | 'cyberpunk' | 'gradient' | 
+           'vaporwave' | 'paper'
   }
 
   const Window = ({ title, children, isActive = false, style = terminalStyle }: WindowProps) => {
@@ -142,9 +152,9 @@ export default function EnhancedPortfolio() {
         title: "text-sm text-yellow-500 font-mono uppercase tracking-widest",
         content: "p-4 text-yellow-100",
         animation: {
-          initial: { opacity: 0, skewX: -10 },
-          animate: { opacity: 1, skewX: 0 },
-          transition: { type: "spring", stiffness: 100 }
+          initial: { opacity: 0, scale: 0.95 },
+          animate: { opacity: 1, scale: 1 },
+          transition: { type: "spring", stiffness: 200 }
         }
       },
       gradient: {
@@ -158,6 +168,32 @@ export default function EnhancedPortfolio() {
           initial: { opacity: 0, rotate: -2 },
           animate: { opacity: 1, rotate: 0 },
           transition: { type: "spring", stiffness: 200 }
+        }
+      },
+      vaporwave: {
+        window: "bg-gradient-to-br from-pink-500/20 via-purple-500/20 to-blue-500/20 backdrop-blur-md rounded-lg border-2 border-pink-400/30",
+        header: "px-4 py-2 border-b-2 border-pink-400/30 bg-gradient-to-r from-pink-500/10 to-purple-500/10",
+        buttons: "flex gap-2",
+        button: "w-3 h-3 rounded-full shadow-lg shadow-pink-500/50",
+        title: "text-sm text-pink-300 font-mono tracking-widest",
+        content: "p-4 text-pink-200",
+        animation: {
+          initial: { opacity: 0, rotate: -2 },
+          animate: { opacity: 1, rotate: 0 },
+          transition: { type: "spring", stiffness: 200 }
+        }
+      },
+      paper: {
+        window: "bg-stone-50 rounded-lg border border-stone-200 shadow-md",
+        header: "px-4 py-2 bg-stone-100 border-b border-stone-200",
+        buttons: "flex gap-2",
+        button: "w-3 h-3 rounded-full shadow-sm",
+        title: "text-sm text-stone-600 font-mono",
+        content: "p-4 text-stone-800",
+        animation: {
+          initial: { opacity: 0, y: -5 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.2 }
         }
       }
     }
@@ -214,7 +250,9 @@ export default function EnhancedPortfolio() {
       neon: { close: 'bg-purple-500', minimize: 'bg-purple-400', maximize: 'bg-purple-300' },
       matrix: { close: 'bg-green-500', minimize: 'bg-green-400', maximize: 'bg-green-300' },
       cyberpunk: { close: 'bg-yellow-500', minimize: 'bg-yellow-400', maximize: 'bg-yellow-300' },
-      gradient: { close: 'bg-gradient-to-r from-purple-500 to-pink-500', minimize: 'bg-gradient-to-r from-pink-500 to-red-500', maximize: 'bg-gradient-to-r from-red-500 to-orange-500' }
+      gradient: { close: 'bg-gradient-to-r from-purple-500 to-pink-500', minimize: 'bg-gradient-to-r from-pink-500 to-red-500', maximize: 'bg-gradient-to-r from-red-500 to-orange-500' },
+      vaporwave: { close: 'bg-pink-500', minimize: 'bg-purple-500', maximize: 'bg-blue-500' },
+      paper: { close: 'bg-red-400', minimize: 'bg-amber-400', maximize: 'bg-emerald-400' },
     }
     return colors[style]?.[type] || colors.modern[type]
   }
@@ -414,7 +452,7 @@ export default function EnhancedPortfolio() {
                 <div className="mt-6 space-y-4">
                   <h3 className={`text-sm font-mono text-${colorTheme}-400`}>Terminal Style</h3>
                   <div className="grid grid-cols-2 gap-2">
-                    {['modern', 'retro', 'minimal', 'glass', 'neon', 'matrix', 'cyberpunk', 'gradient'].map((style) => (
+                    {['modern', 'retro', 'minimal', 'glass', 'neon', 'matrix', 'cyberpunk', 'gradient', 'vaporwave', 'paper'].map((style) => (
                       <motion.button
                         key={style}
                         whileHover={{ scale: 1.02 }}
@@ -517,18 +555,7 @@ export default function EnhancedPortfolio() {
                     />
                   </span>
                 </h1>
-
-                {/* Dynamic Role Display */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="mb-8"
-                >
-                  <span className={`text-xl ${isDarkMode ? 'text-zinc-400' : 'text-gray-600'}`}>
-                    Software Engineer II at ConsultAdd
-                  </span>
-                </motion.div>
+                <br />
                 
                 {/* Brief Introduction */}
                 <motion.p 
@@ -542,30 +569,6 @@ export default function EnhancedPortfolio() {
                   <span className="text-green-500 font-semibold">cloud architecture</span>,
                   passionate about building elegant solutions to complex problems.
                 </motion.p>
-
-                {/* Quick Stats */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="flex flex-wrap justify-center gap-8 mb-12"
-                >
-                  {[
-                    { label: 'Years Experience', value: '2+' },
-                    { label: 'Projects Completed', value: '15+' },
-                    { label: 'Technologies', value: '10+' }
-                  ].map((stat, index) => (
-                    <div key={index} className="text-center">
-                      <div className={`text-2xl font-bold mb-1 ${isDarkMode ? 'text-green-500' : 'text-green-600'}`}>
-                        {stat.value}
-                      </div>
-                      <div className={`text-sm ${isDarkMode ? 'text-zinc-400' : 'text-gray-600'}`}>
-                        {stat.label}
-                      </div>
-                    </div>
-                  ))}
-                </motion.div>
-
                 {/* CTA Buttons */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
@@ -607,6 +610,7 @@ export default function EnhancedPortfolio() {
                   {[
                     { icon: Github, href: 'https://github.com/isandeepMakwana', label: 'GitHub' },
                     { icon: Linkedin, href: 'https://www.linkedin.com/in/sandeepmakwana', label: 'LinkedIn' },
+                    { icon: Code2, href: 'https://leetcode.com/isandeepMakwana', label: 'LeetCode' },
                     { icon: Mail, href: 'mailto:sandeepmakwana.work@gmail.com', label: 'Email' }
                   ].map((social, index) => (
                     <motion.a
@@ -1067,7 +1071,7 @@ export default function EnhancedPortfolio() {
                         {[
                           { icon: Github, label: 'github.com/isandeepmakwana', href: 'https://github.com/isandeepMakwana' },
                           { icon: Linkedin, label: 'linkedin.com/in/sandeepmakwana', href: 'https://www.linkedin.com/in/sandeepmakwana' },
-                          { icon: Terminal, label: 'leetcode.com/isandeepMakwana', href: 'https://leetcode.com/isandeepMakwana' },
+                          { icon: Code2, label: 'leetcode.com/isandeepMakwana', href: 'https://leetcode.com/isandeepMakwana' },
                         ].map((social, index) => (
                           <motion.div
                             key={index}
