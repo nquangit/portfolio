@@ -305,7 +305,7 @@ export default function EnhancedPortfolio() {
             ))}
             <li className="md:ml-4">
               <motion.a
-                href="https://drive.google.com/file/d/1wzmmR0z68oF1bbAdFbrzcoAl6c1ZVeTh/view?usp=sharing"
+                href="https://www.topcv.vn/xem-cv/BlFRVlIGUAwIUgsEAlNQVgBVV1MHVwEPVgVRAQ1a82"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
@@ -546,7 +546,7 @@ export default function EnhancedPortfolio() {
                 <h1 className={`text-5xl md:text-7xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-black'}`}>
                   Hi, <span className="text-green-500">I'm</span>{' '}
                   <span className="relative">
-                    Sandeep Makwana
+                    Ngọc Quang - nquangit
                     <motion.span
                       className="absolute -bottom-2 left-0 w-full h-1 bg-green-500/20"
                       initial={{ width: 0 }}
@@ -564,10 +564,11 @@ export default function EnhancedPortfolio() {
                   transition={{ delay: 0.4 }}
                   className={`text-xl max-w-2xl mx-auto mb-8 ${isDarkMode ? 'text-zinc-400' : 'text-gray-600'}`}
                 >
-                  I'm a Software Engineer specializing in{' '}
-                  <span className="text-green-500 font-semibold">full-stack development</span> and{' '}
-                  <span className="text-green-500 font-semibold">cloud architecture</span>,
-                  passionate about building elegant solutions to complex problems.
+                  I'm currently a Student at{' '}
+                  <span className="text-orange-600 font-semibold">FPT University</span> and aim to become a{' '}
+                  <span className="text-rose-600 font-semibold">pentester - red team</span>. I am also very interested in learning about{' '}
+                  <span className="text-cyan-500 font-semibold">network & cloud infrastructure</span>, and{' '}
+                  <span className="text-teal-500 font-semibold">AI</span>,{' '}passionate about building elegant solutions to complex problems.
                 </motion.p>
                 {/* CTA Buttons */}
                 <motion.div
@@ -587,7 +588,7 @@ export default function EnhancedPortfolio() {
                     Get in touch
                   </motion.a>
                   <motion.a
-                    href="https://drive.google.com/file/d/1wzmmR0z68oF1bbAdFbrzcoAl6c1ZVeTh/view?usp=sharing"
+                    href="https://www.topcv.vn/xem-cv/BlFRVlIGUAwIUgsEAlNQVgBVV1MHVwEPVgVRAQ1a82"
                     target="_blank"
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.05 }}
@@ -596,7 +597,7 @@ export default function EnhancedPortfolio() {
                       text-green-500 font-bold hover:bg-green-500/10 transition-colors duration-300"
                   >
                     <FileText className="w-5 h-5" />
-                    Download Resume
+                    View Resume
                   </motion.a>
                 </motion.div>
 
@@ -608,10 +609,9 @@ export default function EnhancedPortfolio() {
                   className="mt-12 flex justify-center gap-6"
                 >
                   {[
-                    { icon: Github, href: 'https://github.com/isandeepMakwana', label: 'GitHub' },
-                    { icon: Linkedin, href: 'https://www.linkedin.com/in/sandeepmakwana', label: 'LinkedIn' },
-                    { icon: Code2, href: 'https://leetcode.com/isandeepMakwana', label: 'LeetCode' },
-                    { icon: Mail, href: 'mailto:sandeepmakwana.work@gmail.com', label: 'Email' }
+                    { icon: Github, href: 'https://github.com/nquangit', label: 'GitHub' },
+                    { icon: Linkedin, href: 'https://www.linkedin.com/in/nquangit', label: 'LinkedIn' },
+                    { icon: Mail, href: 'mailto:nquang.it.04@gmail.com', label: 'Email' }
                   ].map((social, index) => (
                     <motion.a
                       key={index}
@@ -655,35 +655,26 @@ export default function EnhancedPortfolio() {
                       <div className="flex gap-4 items-center hover:bg-zinc-800/50 p-2 rounded transition-colors">
                         <span className="text-zinc-600 select-none">01</span>
                         <span>
-                          Hi! I'm <span className="text-green-500 font-semibold">Sandeep Makwana</span>, 
-                          a <span className="text-blue-400 font-semibold">Software Engineer II</span> at ConsultAdd.
+                          Hi! I'm <span className="text-green-500 font-semibold">Huỳnh Ngọc Quang - nquangit</span>, 
+                          a Second-year<span className="text-blue-400 font-semibold"> Information Assurance</span> student at FPT University.
                         </span>
                       </div>
                       <div className="flex gap-4 items-center hover:bg-zinc-800/50 p-2 rounded transition-colors">
                         <span className="text-zinc-600 select-none">02</span>
                         <span>
-                          With <span className="text-yellow-500">2+ years</span> of experience in building
-                          <span className="text-purple-400"> scalable applications</span>
+                          With <span className="text-yellow-500">1+ years</span> of experience in <span className="text-purple-400"> Pentesting</span>, IT Helpdesk/Support, and Web Developing
                         </span>
                       </div>
                       <div className="flex gap-4 items-center hover:bg-zinc-800/50 p-2 rounded transition-colors">
                         <span className="text-zinc-600 select-none">03</span>
                         <span>
-                          Specializing in <span className="text-pink-400">full-stack development</span> and
-                          <span className="text-orange-400"> cloud architecture</span>
+                        Passionate about security and aspiring to become <span className="text-rose-600 select-none">Red Team</span>.
                         </span>
                       </div>
                       <div className="flex gap-4 items-center hover:bg-zinc-800/50 p-2 rounded transition-colors">
                         <span className="text-zinc-600 select-none">04</span>
                         <span>
-                          Passionate about <span className="text-green-400">clean code</span> and
-                          <span className="text-blue-400"> optimal solutions</span>
-                        </span>
-                      </div>
-                      <div className="flex gap-4 items-center hover:bg-zinc-800/50 p-2 rounded transition-colors">
-                        <span className="text-zinc-600 select-none">05</span>
-                        <span>
-                          Recognized as <span className="text-yellow-500">Employee of the Month 7 times</span>
+                        Actively learning through self-study and practical projects. Eager to gain experience and learn from industry professionals.
                         </span>
                       </div>
                     </div>
@@ -717,7 +708,7 @@ export default function EnhancedPortfolio() {
                           Frameworks & Libraries
                         </h3>
                         <div className="flex flex-wrap gap-3">
-                          {['Django', 'Flask', 'FastAPI', 'React', 'Tailwind', 'Pytest', 'Pandas', 'NumPy'].map(skill => (
+                          {['Flask', 'React'].map(skill => (
                             <motion.span
                               key={skill}
                               whileHover={{ scale: 1.05 }}
@@ -735,7 +726,7 @@ export default function EnhancedPortfolio() {
                           Cloud & DevOps
                         </h3>
                         <div className="flex flex-wrap gap-3">
-                          {['AWS', 'Docker', 'Jenkins', 'Git', 'CI/CD'].map(skill => (
+                          {['Docker', 'Kubernetes', 'Git', 'Github', 'Bitbucket'].map(skill => (
                             <motion.span
                               key={skill}
                               whileHover={{ scale: 1.05 }}
@@ -752,9 +743,14 @@ export default function EnhancedPortfolio() {
                   <Window title="achievements.md">
                     <div className="space-y-4">
                       {[
-                        { icon: '🏆', color: 'text-green-500', text: 'AWS Certified Solutions Architect - Associate' },
-                        { icon: '👥', color: 'text-yellow-500', text: 'Led team of 28 developers with 30% faster delivery' },
-                        { icon: '🎯', color: 'text-blue-400', text: '7x Employee of the Month' }
+                        { icon: '🎯', color: 'text-rose-400', text: 'Top 8 - 3rd prize on ASCIS 2023 (Jeopardy)' },
+                        { icon: '🎯', color: 'text-rose-400', text: 'Top 12 Vietnam on CTFtime with team0rd3rs (2023)' },
+                        { icon: '🎯', color: 'text-rose-400', text: 'Top 13 NAB Security Jam 2023' },
+                        { icon: '🏆', color: 'text-green-500', text: 'Ethical Hacker (Cisco)' },
+                        { icon: '🏆', color: 'text-yellow-500', text: 'Introduction to CIP (OPSWAT)' },
+                        { icon: '🏆', color: 'text-blue-400', text: 'Certified AppSec Practitioner(The SecOps Group)' },
+                        { icon: '🏆', color: 'text-cyan-400', text: 'CCNAv7: Introduction to Networks (Cisco)' },
+                        { icon: '🏆', color: 'text-cyan-400', text: 'CyberOps Associate (Cisco)' }
                       ].map((achievement, index) => (
                         <motion.div
                           key={index}
@@ -778,30 +774,33 @@ export default function EnhancedPortfolio() {
                   {[
                     {
                       id: '01',
-                      title: 'E-commerce Platform',
-                      year: '2024',
-                      tech: ['React', 'TypeScript', 'Tailwind CSS', 'Stripe'],
-                      description: 'A fully responsive e-commerce platform with secure payments and real-time inventory management.'
+                      title: 'Automated Hybrid Malware Analysis Project with Machine Learning',
+                      year: 'Sep 2024 - Nov 2024',
+                      tech: ['Docker', 'VirtualBox', 'Vagrant', 'CAPEv2 sandbox', 'TensorFlow', '.etc'],
+                      description: 'Team Leader, System Architect, and Developer for the Automated Hybrid Malware Analysis Project leveraging Machine Learning technologies. The project incorporates tools and platforms such as Docker, VirtualBox, Vagrant, CAPEv2 sandbox, and TensorFlow, with code hosted and managed on GitHub.',
+                      link: 'https://github.com/nquangit/SEMESTER4_SUMMER_2024/tree/main/IOT102'
                     },
                     {
                       id: '02',
-                      title: 'AI-Powered Analytics Dashboard',
-                      year: '2023',
-                      tech: ['React', 'Python', 'TensorFlow', 'D3.js'],
-                      description: 'An advanced analytics dashboard leveraging AI for predictive insights and data visualization.'
+                      title: 'IOT Automatic Pet Feeding System',
+                      year: ' May 2024  -  July 2024 ',
+                      tech: ['Arduino', 'ESP8266', 'water sensors', 'load cells', 'Blynk', '.etc'],
+                      description: 'Team Leader, System Architect, and Developer for the IoT Automatic Pet Feeding System Project, utilizing hardware and technologies such as Arduino, ESP8266, water sensors, load cells, Blynk, .etc for efficient and automated functionality.',
+                      link: 'https://github.com/nquangit/SEMESTER4_SUMMER_2024/tree/main/IOT102'
                     },
                     {
                       id: '03',
-                      title: 'Blockchain Voting System',
-                      year: '2023',
-                      tech: ['Solidity', 'Ethereum', 'Web3.js', 'React'],
-                      description: 'A secure and transparent voting system built on blockchain technology for organizational decision-making.'
+                      title: 'Research and exploit security vulnerability',
+                      year: 'July 2023 ',
+                      tech: ['Kali Linux', 'MiTM', 'Ettercap', 'ARP'],
+                      description: 'Researcher and Security Analyst for identifying and exploiting vulnerabilities in the myFAP mobile app, focusing on detecting the lack of HTTPS usage and mitigating Man-in-the-Middle (MiTM) attack threats.',
+                      link: 'https://github.com/nquangit/FAP_MiTM'
                     }
                   ].map((project) => (
                     <motion.div
                       key={project.id}
                       className="group"
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={{ scale: 1.005 }}
                       transition={{ type: 'spring', stiffness: 300 }}
                     >
                       <div className="flex items-center justify-between mb-2">
@@ -810,10 +809,11 @@ export default function EnhancedPortfolio() {
                           <h3 className={`text-2xl font-bold group-hover:text-green-500 transition-colors ${isDarkMode ? 'text-white' : 'text-black'}`}>
                             {project.title}
                           </h3>
+                          <a href={project.link} target="_blank" rel="noopener noreferrer">Link</a>
                         </div>
                         <span className="text-zinc-600">{project.year}</span>
                       </div>
-                      <p className={`mb-4 ${isDarkMode ? 'text-zinc-400' : 'text-gray-600'}`}>{project.description}</p>
+                      <p className={`mb-4 pr-10 ${isDarkMode ? 'text-zinc-400' : 'text-gray-600'}`}>{project.description}</p>
                       <div className="flex gap-2 flex-wrap">
                         {project.tech.map((tech) => (
                           <span key={tech} className="px-2 py-1 rounded-full bg-zinc-800/50 text-xs text-zinc-400">
@@ -833,7 +833,7 @@ export default function EnhancedPortfolio() {
                   Career Journey
                 </h2>
                 <motion.a
-                  href="https://drive.google.com/file/d/1wzmmR0z68oF1bbAdFbrzcoAl6c1ZVeTh/view?usp=sharing"
+                  href="https://www.topcv.vn/xem-cv/BlFRVlIGUAwIUgsEAlNQVgBVV1MHVwEPVgVRAQ1a82"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.05 }}
@@ -842,7 +842,7 @@ export default function EnhancedPortfolio() {
                     hover:bg-zinc-700 transition-colors duration-300 border border-green-500/20"
                 >
                   <FileText className="w-4 h-4" />
-                  <span className="font-mono text-sm">Sandeep_makwana_resume.pdf</span>
+                  <span className="font-mono text-sm">nquangit_resume.pdf</span>
                 </motion.a>
               </div>
               <Window title="career.json" isActive={activeWindow === 'career'}>
@@ -850,7 +850,7 @@ export default function EnhancedPortfolio() {
                   {/* ConsultAdd Full-time Role */}
                   <motion.div
                     className="relative pl-8 border-l-2 border-green-500/20"
-                    whileHover={{ scale: 1.02 }}
+                    whileHover={{ scale: 1.005 }}
                     transition={{ type: 'spring', stiffness: 300 }}
                   >
                     <div className="absolute -left-[9px] top-0">
@@ -903,7 +903,7 @@ export default function EnhancedPortfolio() {
                   {/* ConsultAdd Internship */}
                   <motion.div
                     className="relative pl-8 border-l-2 border-blue-500/20"
-                    whileHover={{ scale: 1.02 }}
+                    whileHover={{ scale: 1.005 }}
                     transition={{ type: 'spring', stiffness: 300 }}
                   >
                     <div className="absolute -left-[9px] top-0">
@@ -1046,9 +1046,9 @@ export default function EnhancedPortfolio() {
                     {/* Contact Information */}
                     <div className="space-y-4">
                       {[
-                        { icon: Mail, label: 'sandeepmakwana.work@gmail.com', href: 'mailto:sandeepmakwana.work@gmail.com' },
-                        { icon: Phone, label: '+91 6263216081', href: 'tel:+916263216081' },
-                        { icon: MapPin, label: 'Pune, Maharashtra, India', href: null },
+                        { icon: Mail, label: 'nquang.it.04@gmail.com', href: 'mailto:nquang.it.04@gmail.com' },
+                        { icon: Phone, label: '+84 935410902', href: 'tel:+84935410902' },
+                        { icon: MapPin, label: 'Thu Duc, Ho Chi Minh City, Vietnam', href: null },
                       ].map((contact, index) => (
                         <motion.div
                           key={index}
@@ -1069,9 +1069,8 @@ export default function EnhancedPortfolio() {
                     <div className="pt-4 border-t border-zinc-800">
                       <div className="space-y-4">
                         {[
-                          { icon: Github, label: 'github.com/isandeepmakwana', href: 'https://github.com/isandeepMakwana' },
-                          { icon: Linkedin, label: 'linkedin.com/in/sandeepmakwana', href: 'https://www.linkedin.com/in/sandeepmakwana' },
-                          { icon: Code2, label: 'leetcode.com/isandeepMakwana', href: 'https://leetcode.com/isandeepMakwana' },
+                          { icon: Github, label: 'github.com/nquangit', href: 'https://github.com/nquangit' },
+                          { icon: Linkedin, label: 'linkedin.com/in/nquangit', href: 'https://www.linkedin.com/in/nquangit' },
                         ].map((social, index) => (
                           <motion.div
                             key={index}
